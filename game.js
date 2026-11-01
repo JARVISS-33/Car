@@ -1,4 +1,4 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { Sky } from 'https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/objects/Sky.js';
 
 const loginScreen = document.querySelector('#login-screen');
