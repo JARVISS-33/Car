@@ -1,64 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#101722" />
-  <title>OpenDrive 3D</title>
-  <link rel="stylesheet" href="./style.css" />
-</head>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><title>OpenDrive 3D – Highway Rush</title><link rel="stylesheet" href="./style.css"></head>
 <body>
-  <div id="login-screen" class="screen">
-    <div class="login-card">
-      <div class="logo">OD<span>3D</span></div>
-      <p class="eyebrow">OPEN-WORLD DRIVING</p>
-      <h1>Take the wheel.</h1>
-      <p class="muted">A browser-based 3D driving demo. No account or database is used.</p>
-      <form id="login-form">
-        <label for="player-name">Player name</label>
-        <input id="player-name" autocomplete="nickname" maxlength="24" placeholder="Enter a nickname" required />
-        <button class="primary" type="submit">Enter the garage <span>→</span></button>
-      </form>
-      <p class="fine-print">Demo entry only — this is not secure account authentication.</p>
-    </div>
-  </div>
-
-  <main id="game-screen" class="hidden">
-    <canvas id="game-canvas"></canvas>
-    <div class="topbar">
-      <div class="brand">OD<span>3D</span></div>
-      <div class="player-chip"><span class="status-dot"></span><span id="player-label">Driver</span></div>
-      <button id="camera-button" class="ghost" type="button">Camera: Chase (C)</button>
-      <button id="mission-button" class="ghost" type="button">Start mission</button>
-      <button id="logout-button" class="ghost">Exit session</button>
-    </div>
-    <div class="hud">
-      <div class="speed-card"><div class="small-label">SPEED</div><div><strong id="speed">000</strong><span> km/h</span></div></div>
-      <div class="hint-card"><strong id="mode-label">FREE DRIVE</strong><span id="mission-label">Explore the demo city</span></div>
-      <div class="status-card"><span>NITRO</span><div class="nitro-track"><i id="nitro-bar"></i></div><small id="nitro-label">100%</small></div>
-      <div class="status-card"><span>CAR CONDITION</span><div class="nitro-track"><i id="health-bar"></i></div><small id="health-label">100%</small></div>
-    </div>
-    <div class="help">W / ↑ accelerate · S / ↓ brake · A D / ← → steer · SPACE nitro · C camera · R reset car</div>
-    <div class="mobile-controls">
-      <div class="steering">
-        <button data-key="ArrowLeft" aria-label="Steer left">◀</button>
-        <button data-key="ArrowRight" aria-label="Steer right">▶</button>
-      </div>
-      <div class="pedals">
-        <button data-key="ArrowDown" class="brake">BRAKE</button>
-        <button data-key="ArrowUp" class="accelerate">GO</button><button data-key="Space" class="nitro-button">NITRO</button>
-      </div>
-    </div>
-    <div id="toast" class="toast">Welcome to OpenDrive 3D</div>
-  </main>
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
-    }
-  }
-  </script>
-  <script type="module" src="./game.js"></script>
-</body>
-</html>
+<canvas id="c"></canvas>
+ 
+<section id="menu" class="screen"><div class="card">
+<div class="logo">OD<span>3D</span></div><h1>HIGHWAY RUSH</h1>
+<p class="coins">Coins: <b>0</b></p>
+<button class="primary" data-go="missions">PLAY</button>
+<button data-go="garage">GARAGE</button>
+<button data-go="settings">SETTINGS</button>
+</div></section>
+ 
+<section id="missions" class="screen hidden"><div class="card wide">
+<h2>Missions</h2><p class="coins">Coins: <b>0</b></p>
+<div id="mList" class="list"></div><button data-go="menu">Back</button>
+</div></section>
+ 
+<section id="garage" class="screen hidden"><div class="card wide">
+<h2>Garage</h2><p class="coins">Coins: <b>0</b></p>
+<div id="gList" class="list"></div><h2>Upgrades</h2><div id="uList" class="list"></div>
+<button data-go="menu">Back</button>
+</div></section>
+ 
+<section id="settings" class="screen hidden"><div class="card wide">
+<h2>Settings</h2>
+<label>Sound <input type="checkbox" id="sSound"></label>
+<label>Camera <select id="sCam"><option value="0">Chase</option><option value="1">Hood</option><option value="2">Far chase</option></select></label>
+<h2>Achievements</h2><div id="achL" class="list"></div>
+<button data-go="menu">Back</button>
+</div></section>
+ 
+<section id="pause" class="screen hidden"><div class="card"><h2>Paused</h2>
+<button class="primary" data-act="resume">RESUME</button><button data-act="quit">QUIT TO MENU</button>
+</div></section>
+ 
+<section id="result" class="screen hidden"><div class="card">
+<h1 id="rT"></h1><p id="rW"></p><div id="rS" class="list"></div>
+<button class="primary" data-act="retry">RETRY</button>
+<button data-go="missions">MISSIONS</button><button data-go="menu">MENU</button>
+</div></section>
+ 
+<div id="hud" class="hidden">
+<div class="top">
+<div class="chip"><small>TIME</small><b id="hT">0</b></div>
+<div class="chip wide"><small id="hGoalL">GOAL</small><div class="bar"><i id="hGoal"></i></div><b id="hGoalT"></b></div>
+<div class="chip"><small>SCORE</small><b id="hS">0</b></div>
+<button data-act="pause">II</button>
+</div>
+<div class="left"><small>HEALTH</small><div class="bar red"><i id="hHp"></i></div><small>NITRO</small><div class="bar blue"><i id="hN"></i></div><small id="hStat"></small></div>
+<div class="right"><div id="dial"><b id="hSp">0</b><small>km/h</small></div><div id="wheel"></div></div>
+<div id="center"></div>
+<div class="touch">
+<div><button data-k="ArrowLeft">◀</button><button data-k="ArrowRight">▶</button></div>
+<div><button data-k="ShiftLeft">DRIFT</button><button data-k="Space">N2O</button><button data-k="ArrowDown">BRK</button><button data-k="ArrowUp">GO</button></div>
+</div>
+</div>
+<div id="toast"></div>
+ 
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"}}</script>
+<script type="module" src="./game.js"></script>
+</body></html>
