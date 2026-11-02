@@ -315,17 +315,32 @@ function updateCamera(dt) {
 
 function animate() {
   if (!running) return;
-  animationId = requestAnimationFrame(animate);
+    animationId = requestAnimationFrame(animate);
   const dt = Math.min(clock.getDelta(), 0.04);
   const accelerating = keys.has('ArrowUp') || keys.has('KeyW');
   const braking = keys.has('ArrowDown') || keys.has('KeyS');
   const left = keys.has('ArrowLeft') || keys.has('KeyA');
   const right = keys.has('ArrowRight') || keys.has('KeyD');
+
   nitroActive = keys.has('Space') && nitro > 0 && accelerating;
-  if (accelerating) speed = Math.min(maxSpeed * (nitroActive ? 1.55 : 1), speed + (nitroActive ? 30 : 17) * dt);
-  if (nitroActive) nitro = Math.max(0, nitro - 32 * dt); else nitro = Math.min(100, nitro + 5 * dt);
-  else speed *= Math.pow(0.987, dt * 60);
+
+  if (accelerating) {
+    speed = Math.min(
+      maxSpeed * (nitroActive ? 1.55 : 1),
+      speed + (nitroActive ? 30 : 17) * dt
+    );
+  } else {
+    speed *= Math.pow(0.987, dt * 60);
+  }
+
+  if (nitroActive) {
+    nitro = Math.max(0, nitro - 32 * dt);
+  } else {
+    nitro = Math.min(100, nitro + 5 * dt);
+  }
+
   if (braking) speed = Math.max(-8, speed - 25 * dt);
+
   steer = (left ? 1 : 0) - (right ? 1 : 0);
   const steeringEffect = Math.min(1, Math.abs(speed) / 5);
   heading += steer * steeringEffect * 1.55 * dt * Math.sign(speed || 1);
