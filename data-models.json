@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "examples": {
+    "playerProfile": {
+      "playerId": "demo-local-001",
+      "displayName": "Driver",
+      "createdAt": "2026-11-02T00:00:00Z",
+      "wallet": { "coins": 1250, "cash": 4500 },
+      "ownedVehicleIds": ["starter-coupe"],
+      "activeVehicleId": "starter-coupe",
+      "settingsId": "settings-default",
+      "achievementIds": ["first-drive"],
+      "missionProgress": { "checkpoint-intro": { "status": "completed", "bestTimeSeconds": 54.2 } }
+    },
+    "vehicleData": {
+      "id": "starter-coupe",
+      "displayName": "Pulse GT",
+      "class": "sport",
+      "price": 0,
+      "unlockRequirement": null,
+      "physics": { "massKg": 1320, "maxSpeedKph": 210, "engineTorqueNm": 320, "brakeTorqueNm": 2200, "wheelRadiusM": 0.34, "centerOfMassY": 0.42, "dragCoefficient": 0.31, "frontalAreaM2": 2.1, "tireGrip": 1.0 },
+      "upgradeLevels": { "engine": 0, "nitro": 0, "brakes": 0, "suspension": 0, "tires": 0 },
+      "paint": "mint-metallic"
+    },
+    "mission": {
+      "id": "checkpoint-intro",
+      "title": "City Sprint",
+      "type": "checkpoint-race",
+      "difficulty": "beginner",
+      "timeLimitSeconds": 75,
+      "checkpointIds": ["cp-01", "cp-02", "cp-03"],
+      "failConditions": ["timer-expired", "vehicle-disabled"],
+      "reward": { "coins": 150, "cash": 250, "achievementId": "first-checkpoint-run" },
+      "repeatable": true
+    },
+    "upgrade": {
+      "id": "engine-stage-1",
+      "category": "engine",
+      "level": 1,
+      "priceCoins": 300,
+      "effects": { "torqueMultiplier": 1.08 },
+      "maxLevel": 5
+    },
+    "reward": {
+      "id": "reward-checkpoint-intro-run-001",
+      "source": "mission:checkpoint-intro",
+      "playerId": "demo-local-001",
+      "grants": { "coins": 150, "cash": 250 },
+      "claimedAt": "2026-11-02T00:00:00Z",
+      "idempotencyKey": "demo-local-001:checkpoint-intro:run-001"
+    },
+    "savedProgress": {
+      "schemaVersion": 1,
+      "savedAt": "2026-11-02T00:00:00Z",
+      "player": { "wallet": { "coins": 1250, "cash": 4500 }, "activeVehicleId": "starter-coupe" },
+      "vehicles": { "starter-coupe": { "owned": true, "upgradeLevels": { "engine": 1, "nitro": 0, "brakes": 0, "suspension": 0, "tires": 0 }, "paint": "mint-metallic" } },
+      "missions": { "checkpoint-intro": { "status": "completed", "bestTimeSeconds": 54.2, "attempts": 2 } },
+      "settings": { "masterVolume": 0.8, "musicVolume": 0.5, "sfxVolume": 0.85, "steeringSensitivity": 0.7, "cameraMode": "chase", "graphicsQuality": "medium" },
+      "achievements": ["first-drive", "first-checkpoint-run"]
+    }
+  },
+  "note": "These are example production-oriented data contracts only. The current GitHub Pages demo does not persist this profile and does not connect to a database."
+}
